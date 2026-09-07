@@ -55,7 +55,7 @@ export function MotoCard({ moto }: { moto: Moto }) {
           </p>
         </div>
         <Button asChild>
-          <Link to="/simulacao" search={{ moto: moto.id }}>
+          <Link to="/simulacao">
             Alugar
           </Link>
         </Button>

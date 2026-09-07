@@ -11,9 +11,6 @@ import { cn } from "@/lib/utils";
 import { formatarPreco, motos } from "@/data/motos";
 
 export const Route = createFileRoute("/simulacao")({
-  validateSearch: (search: Record<string, unknown>) => ({
-    moto: typeof search.moto === "string" ? search.moto : undefined,
-  }),
   head: () => ({
     meta: [
       { title: "Simular locação de moto | LocaG" },
@@ -41,15 +38,16 @@ const extras = [
 
 const etapas = ["Moto e período", "Condutor", "Extras"];
 
+const primeira = motos[0]!;
+
 function SimulacaoPage() {
-  const { moto: motoBuscada } = Route.useSearch();
   const [etapa, setEtapa] = useState(0);
-  const [motoId, setMotoId] = useState(motoBuscada ?? motos[0].id);
+  const [motoId, setMotoId] = useState(primeira.id);
   const [dias, setDias] = useState(3);
   const [selecionados, setSelecionados] = useState<string[]>([]);
   const [confirmado, setConfirmado] = useState(false);
 
-  const moto = motos.find((m) => m.id === motoId) ?? motos[0];
+  const moto = motos.find((m) => m.id === motoId) ?? primeira;
 
   const { subtotal, extrasTotal, desconto, total } = useMemo(() => {
     const sub = moto.precoDia * dias;
